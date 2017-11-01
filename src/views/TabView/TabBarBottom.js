@@ -162,13 +162,18 @@ class TabBarBottom extends React.PureComponent<Props> {
       getTestIDProps,
       activeBackgroundColor,
       inactiveBackgroundColor,
-      style,
       tabStyle,
       isLandscape,
     } = this.props;
     const { routes } = navigation.state;
     // Prepend '-1', so there are always at least 2 items in inputRange
     const inputRange = [-1, ...routes.map((x: *, i: number) => i)];
+
+    const {
+      backgroundColor = '#F7F7F7', // Default background color in iOS 10
+      ...style
+    } =
+      this.props.style || {};
 
     const tabBarStyle = [
       styles.tabBar,
@@ -180,7 +185,7 @@ class TabBarBottom extends React.PureComponent<Props> {
 
     return (
       <SafeAreaView
-        style={styles.tabBarContainer}
+        style={[styles.tabBarContainer, { backgroundColor }]}
         forceInset={{ bottom: 'always' }}
       >
         <Animated.View style={tabBarStyle}>
@@ -236,7 +241,6 @@ const LABEL_LEFT_MARGIN = 20;
 const LABEL_TOP_MARGIN = 15;
 const styles = StyleSheet.create({
   tabBarContainer: {
-    backgroundColor: '#F7F7F7', // Default background color in iOS 10
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: 'rgba(0, 0, 0, .3)',
   },
